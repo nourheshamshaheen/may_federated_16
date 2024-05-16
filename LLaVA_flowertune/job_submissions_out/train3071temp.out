@@ -1,0 +1,238 @@
+This is federated training
+[2024-05-06 21:05:15,674] [INFO] [real_accelerator.py:203:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+Warning: The default cache directory for DeepSpeed Triton autotune, /home/nour.hesham/.triton/autotune, appears to be on an NFS system. While this is generally acceptable, if you experience slowdowns or hanging when DeepSpeed exits, it is recommended to set the TRITON_CACHE_DIR environment variable to a non-NFS path.
+[93m [WARNING] [0m async_io requires the dev libaio .so object and headers but these were not found.
+[93m [WARNING] [0m async_io: please install the libaio-devel package with yum
+[93m [WARNING] [0m If libaio is already installed (perhaps from source), try setting the CFLAGS and LDFLAGS environment variables to where it can be found.
+[93m [WARNING] [0m Please specify the CUTLASS repo directory as environment variable $CUTLASS_PATH
+[93m [WARNING] [0m NVIDIA Inference is only supported on Ampere and newer architectures
+[93m [WARNING] [0m sparse_attn requires a torch version >= 1.5 and < 2.0 but detected 2.1
+[93m [WARNING] [0m using untested triton version (2.1.0), only 1.0.0 is known to be compatible
+experiment_name: first_trial_llavamed_from_without_tags
+num_clients: 2
+num_rounds: 1
+data:
+  name: Standard LLAVA Data Format
+  full_path: ./data_jsons/
+  editable_path: train_tags_client_
+  extension: .json
+  image_folder: /scratch/nshaheen/project/may_federated/train_images/
+  image_aspect_ratio: pad
+  is_multimodal: true
+  per_client_data_path: ''
+  image_processor: ''
+  mm_use_im_start_end: ''
+model:
+  mm_projector_lr: 2.0e-05
+  name: /scratch/nshaheen/LLAMA/llava_med_in_text_60k_FINAL
+  quantization: 4
+  gradient_checkpointing: true
+  freeze_backbone: false
+  lora:
+    peft_lora_r: 128
+    peft_lora_alpha: 256
+  lora_enable: true
+  lora_dropout: 0.05
+  lora_bias: none
+  model_max_length: 512
+  vision_tower: openai/clip-vit-large-patch14-336
+  tune_mm_mlp_adapter: false
+  mm_vision_select_layer: -2
+  mm_vision_select_feature: patch
+  pretrain_mm_mlp_adapter: None
+  mm_patch_merge_type: flat
+  mm_use_im_patch_token: false
+  mm_use_im_start_end: false
+  mm_projector_type: linear
+  freeze_mm_mlp_adapter: false
+train:
+  double_quant: true
+  quant_type: nf4
+  lora_r: 64
+  lora_alpha: 16
+  name: ''
+  full_path: ''
+  num_rounds: ${num_rounds}
+  save_every_round: 5
+  learning_rate_max: 5.0e-05
+  learning_rate_min: 1.0e-06
+  seq_length: 512
+  group_by_modality_length: true
+  mpt_attn_impl: triton
+  training_arguments:
+    output_dir: output/${experiment_name}
+    report_to: tensorboard
+    num_train_epochs: 1
+    gradient_checkpointing: true
+    fp16: true
+    bf16: false
+    per_device_train_batch_size: 4
+    per_device_eval_batch_size: 4
+    gradient_accumulation_steps: 1
+    weight_decay: 0.0
+    optim: adamw_torch
+    remove_unused_columns: false
+    evaluation_strategy: 'no'
+    save_strategy: steps
+    save_steps: 5000
+    save_total_limit: 1
+    learning_rate: 0.0002
+    warmup_ratio: 0.03
+    lr_scheduler_type: cosine
+    logging_steps: 1
+    dataloader_num_workers: 4
+    lazy_preprocess: true
+strategy:
+  _target_: flwr.server.strategy.FedAvg
+  fraction_fit: 0.1
+  fraction_evaluate: 0.0
+client_resources:
+  num_cpus: 2
+  num_gpus: 1.0
+
+[2024-05-06 21:05:19,647][flwr][INFO] - Starting Flower simulation, config: num_rounds=1, no round_timeout
+[2024-05-06 21:05:54,090][flwr][INFO] - Flower VCE: Ray initialized with resources: {'CPU': 40.0, 'object_store_memory': 46000227532.0, 'memory': 97333864244.0, 'node:10.53.222.27': 1.0, 'node:__internal_head__': 1.0, 'accelerator_type:V100': 1.0, 'GPU': 1.0}
+[2024-05-06 21:05:54,092][flwr][INFO] - Optimize your simulation with Flower VCE: https://flower.ai/docs/framework/how-to-run-simulations.html
+[2024-05-06 21:05:54,093][flwr][INFO] - Flower VCE: Resources for each Virtual Client: {'num_cpus': 2, 'num_gpus': 1.0}
+[2024-05-06 21:05:54,105][flwr][INFO] - Flower VCE: Creating VirtualClientEngineActorPool with 1 actors
+[2024-05-06 21:05:54,110][flwr][INFO] - [INIT]
+[2024-05-06 21:05:54,112][flwr][INFO] - Requesting initial parameters from one random client
+[2m[36m(ClientAppActor pid=747621)[0m [2024-05-06 21:06:02,782] [INFO] [real_accelerator.py:203:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2m[36m(ClientAppActor pid=747621)[0m Warning: The default cache directory for DeepSpeed Triton autotune, /home/nour.hesham/.triton/autotune, appears to be on an NFS system. While this is generally acceptable, if you experience slowdowns or hanging when DeepSpeed exits, it is recommended to set the TRITON_CACHE_DIR environment variable to a non-NFS path.
+[2m[36m(ClientAppActor pid=747621)[0m [93m [WARNING] [0m async_io requires the dev libaio .so object and headers but these were not found.
+[2m[36m(ClientAppActor pid=747621)[0m [93m [WARNING] [0m async_io: please install the libaio-devel package with yum
+[2m[36m(ClientAppActor pid=747621)[0m [93m [WARNING] [0m If libaio is already installed (perhaps from source), try setting the CFLAGS and LDFLAGS environment variables to where it can be found.
+[2m[36m(ClientAppActor pid=747621)[0m [93m [WARNING] [0m Please specify the CUTLASS repo directory as environment variable $CUTLASS_PATH
+[2m[36m(ClientAppActor pid=747621)[0m [93m [WARNING] [0m NVIDIA Inference is only supported on Ampere and newer architectures
+[2m[36m(ClientAppActor pid=747621)[0m [93m [WARNING] [0m sparse_attn requires a torch version >= 1.5 and < 2.0 but detected 2.1
+[2m[36m(ClientAppActor pid=747621)[0m [93m [WARNING] [0m using untested triton version (2.1.0), only 1.0.0 is known to be compatible
+[2024-05-06 21:06:06,245][flwr][ERROR] - Traceback (most recent call last):
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 73, in _submit_job
+    out_mssg, updated_context = self.actor_pool.get_client_result(
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 399, in get_client_result
+    return self._fetch_future_result(cid)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 280, in _fetch_future_result
+    res_cid, out_mssg, updated_context = ray.get(
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/ray/_private/auto_init_hook.py", line 24, in auto_init_wrapper
+    return fn(*args, **kwargs)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/ray/_private/client_mode_hook.py", line 103, in wrapper
+    return func(*args, **kwargs)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/ray/_private/worker.py", line 2524, in get
+    raise value.as_instanceof_cause()
+ray.exceptions.RayTaskError(ClientAppException): [36mray::ClientAppActor.run()[39m (pid=747621, ip=10.53.222.27, actor_id=b5e5a7459b247762b67c8c3401000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7f9184cac7c0>)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/client/client_app.py", line 98, in __call__
+    return self._call(message, context)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/client/client_app.py", line 81, in ffn
+    out_message = handle_legacy_message_from_msgtype(
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/client/message_handler/message_handler.py", line 96, in handle_legacy_message_from_msgtype
+    client = client_fn(str(message.metadata.partition_id))
+  File "/scratch/nshaheen/project/may_federated/LLaVA_flowertune/client.py", line 132, in client_fn
+    return FlowerClient(
+  File "/scratch/nshaheen/project/may_federated/LLaVA_flowertune/client.py", line 41, in __init__
+    self.training_arguments = TrainingArguments(**train_cfg.training_arguments)
+TypeError: __init__() got an unexpected keyword argument 'lazy_preprocess'
+
+The above exception was the direct cause of the following exception:
+
+[36mray::ClientAppActor.run()[39m (pid=747621, ip=10.53.222.27, actor_id=b5e5a7459b247762b67c8c3401000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7f9184cac7c0>)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 64, in run
+    raise ClientAppException(str(ex)) from ex
+flwr.client.client_app.ClientAppException: 
+Exception ClientAppException occurred. Message: __init__() got an unexpected keyword argument 'lazy_preprocess'
+
+[2024-05-06 21:06:06,247][flwr][ERROR] - [36mray::ClientAppActor.run()[39m (pid=747621, ip=10.53.222.27, actor_id=b5e5a7459b247762b67c8c3401000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7f9184cac7c0>)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/client/client_app.py", line 98, in __call__
+    return self._call(message, context)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/client/client_app.py", line 81, in ffn
+    out_message = handle_legacy_message_from_msgtype(
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/client/message_handler/message_handler.py", line 96, in handle_legacy_message_from_msgtype
+    client = client_fn(str(message.metadata.partition_id))
+  File "/scratch/nshaheen/project/may_federated/LLaVA_flowertune/client.py", line 132, in client_fn
+    return FlowerClient(
+  File "/scratch/nshaheen/project/may_federated/LLaVA_flowertune/client.py", line 41, in __init__
+    self.training_arguments = TrainingArguments(**train_cfg.training_arguments)
+TypeError: __init__() got an unexpected keyword argument 'lazy_preprocess'
+
+The above exception was the direct cause of the following exception:
+
+[36mray::ClientAppActor.run()[39m (pid=747621, ip=10.53.222.27, actor_id=b5e5a7459b247762b67c8c3401000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7f9184cac7c0>)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 64, in run
+    raise ClientAppException(str(ex)) from ex
+flwr.client.client_app.ClientAppException: 
+Exception ClientAppException occurred. Message: __init__() got an unexpected keyword argument 'lazy_preprocess'
+[2024-05-06 21:06:06,249][flwr][ERROR] - [36mray::ClientAppActor.run()[39m (pid=747621, ip=10.53.222.27, actor_id=b5e5a7459b247762b67c8c3401000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7f9184cac7c0>)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/client/client_app.py", line 98, in __call__
+    return self._call(message, context)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/client/client_app.py", line 81, in ffn
+    out_message = handle_legacy_message_from_msgtype(
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/client/message_handler/message_handler.py", line 96, in handle_legacy_message_from_msgtype
+    client = client_fn(str(message.metadata.partition_id))
+  File "/scratch/nshaheen/project/may_federated/LLaVA_flowertune/client.py", line 132, in client_fn
+    return FlowerClient(
+  File "/scratch/nshaheen/project/may_federated/LLaVA_flowertune/client.py", line 41, in __init__
+    self.training_arguments = TrainingArguments(**train_cfg.training_arguments)
+TypeError: __init__() got an unexpected keyword argument 'lazy_preprocess'
+
+The above exception was the direct cause of the following exception:
+
+[36mray::ClientAppActor.run()[39m (pid=747621, ip=10.53.222.27, actor_id=b5e5a7459b247762b67c8c3401000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7f9184cac7c0>)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 64, in run
+    raise ClientAppException(str(ex)) from ex
+flwr.client.client_app.ClientAppException: 
+Exception ClientAppException occurred. Message: __init__() got an unexpected keyword argument 'lazy_preprocess'
+[2024-05-06 21:06:06,253][flwr][ERROR] - Traceback (most recent call last):
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/simulation/app.py", line 308, in start_simulation
+    hist = run_fl(
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/server/server.py", line 483, in run_fl
+    hist, elapsed_time = server.fit(
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/server/server.py", line 93, in fit
+    self.parameters = self._get_initial_parameters(server_round=0, timeout=timeout)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/server/server.py", line 282, in _get_initial_parameters
+    get_parameters_res = random_client.get_parameters(
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 148, in get_parameters
+    message_out = self._submit_job(message, timeout)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 87, in _submit_job
+    raise ex
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 73, in _submit_job
+    out_mssg, updated_context = self.actor_pool.get_client_result(
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 399, in get_client_result
+    return self._fetch_future_result(cid)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 280, in _fetch_future_result
+    res_cid, out_mssg, updated_context = ray.get(
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/ray/_private/auto_init_hook.py", line 24, in auto_init_wrapper
+    return fn(*args, **kwargs)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/ray/_private/client_mode_hook.py", line 103, in wrapper
+    return func(*args, **kwargs)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/ray/_private/worker.py", line 2524, in get
+    raise value.as_instanceof_cause()
+ray.exceptions.RayTaskError(ClientAppException): [36mray::ClientAppActor.run()[39m (pid=747621, ip=10.53.222.27, actor_id=b5e5a7459b247762b67c8c3401000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7f9184cac7c0>)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/client/client_app.py", line 98, in __call__
+    return self._call(message, context)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/client/client_app.py", line 81, in ffn
+    out_message = handle_legacy_message_from_msgtype(
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/client/message_handler/message_handler.py", line 96, in handle_legacy_message_from_msgtype
+    client = client_fn(str(message.metadata.partition_id))
+  File "/scratch/nshaheen/project/may_federated/LLaVA_flowertune/client.py", line 132, in client_fn
+    return FlowerClient(
+  File "/scratch/nshaheen/project/may_federated/LLaVA_flowertune/client.py", line 41, in __init__
+    self.training_arguments = TrainingArguments(**train_cfg.training_arguments)
+TypeError: __init__() got an unexpected keyword argument 'lazy_preprocess'
+
+The above exception was the direct cause of the following exception:
+
+[36mray::ClientAppActor.run()[39m (pid=747621, ip=10.53.222.27, actor_id=b5e5a7459b247762b67c8c3401000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7f9184cac7c0>)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 64, in run
+    raise ClientAppException(str(ex)) from ex
+flwr.client.client_app.ClientAppException: 
+Exception ClientAppException occurred. Message: __init__() got an unexpected keyword argument 'lazy_preprocess'
+
+[2024-05-06 21:06:06,255][flwr][ERROR] - Your simulation crashed :(. This could be because of several reasons. The most common are: 
+	 > Sometimes, issues in the simulation code itself can cause crashes. It's always a good idea to double-check your code for any potential bugs or inconsistencies that might be contributing to the problem. For example: 
+		 - You might be using a class attribute in your clients that hasn't been defined.
+		 - There could be an incorrect method call to a 3rd party library (e.g., PyTorch).
+		 - The return types of methods in your clients/strategies might be incorrect.
+	 > Your system couldn't fit a single VirtualClient: try lowering `client_resources`.
+	 > All the actors in your pool crashed. This could be because: 
+		 - You clients hit an out-of-memory (OOM) error and actors couldn't recover from it. Try launching your simulation with more generous `client_resources` setting (i.e. it seems {'num_cpus': 2, 'num_gpus': 1.0} is not enough for your run). Use fewer concurrent actors. 
+		 - You were running a multi-node simulation and all worker nodes disconnected. The head node might still be alive but cannot accommodate any actor with resources: {'num_cpus': 2, 'num_gpus': 1.0}.
+Take a look at the Flower simulation examples for guidance <https://flower.ai/docs/framework/how-to-run-simulations.html>.

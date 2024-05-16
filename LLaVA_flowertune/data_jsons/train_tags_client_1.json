@@ -1,0 +1,142 @@
+[
+  {
+    "id": "Vp-9C1FPiQs_image_95a30dd7-a707-42fb-8110-86f012967b87",
+    "image": "Vp-9C1FPiQs_image_95a30dd7-a707-42fb-8110-86f012967b87.jpg",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "<image>\n<pathology>Dermatopathology</pathology>\n<magnification>2.0</magnification>"
+      },
+      {
+        "from": "gpt",
+        "value": "monster cells\nscattered pleomorphism\natypical fibrous histiocytoma\natypical dermatofibroma\nTouton giant cells\ndermatofibromas on the face\nmonster cells\nscattered pleomorphism\natypical fibrous histiocytoma\natypical dermatofibroma\nTouton giant cells\ndermatofibromas on the face\nmonster cells\nscattered pleomorphism\natypical fibrous histiocytoma\natypical dermatofibroma\nTouton giant cells\ndermatofibromas on the face"
+      }
+    ]
+  },
+  {
+    "id": "03l7rQfSfw8_image_6117fe50-2b19-4ed2-816f-97f2cb06c139",
+    "image": "03l7rQfSfw8_image_6117fe50-2b19-4ed2-816f-97f2cb06c139.jpg",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "<image>\n<pathology>Neuropathology</pathology>\n<magnification>2.0</magnification>"
+      },
+      {
+        "from": "gpt",
+        "value": "Well-formed epithelial granulomas\nProminent neutrophilic infiltrates\nWell-formed epithelial granulomas\nProminent neutrophilic infiltrates"
+      }
+    ]
+  },
+  {
+    "id": "4i1mnz889bo_image_bd17ad31-9bea-4657-bf29-0ff86c52fca1",
+    "image": "4i1mnz889bo_image_bd17ad31-9bea-4657-bf29-0ff86c52fca1.jpg",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "<image>\n<pathology>Pulmonary</pathology>\n<magnification>2.0</magnification>"
+      },
+      {
+        "from": "gpt",
+        "value": "heavy smoker's lung\ninterstitial pathology"
+      }
+    ]
+  },
+  {
+    "id": "Qcq4bwMQP9E_image_0a9e6d25-da0f-4309-9c6a-c99729200b7a",
+    "image": "Qcq4bwMQP9E_image_0a9e6d25-da0f-4309-9c6a-c99729200b7a.jpg",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "<image>\n<pathology>Hematopathology</pathology>\n<magnification>0.0</magnification>"
+      },
+      {
+        "from": "gpt",
+        "value": "Lymphoid cells\nLymphoid cells"
+      }
+    ]
+  },
+  {
+    "id": "8-8V2ZcTiXQ_image_68a98a81-c3c8-4c72-8acc-4f14c765c788",
+    "image": "8-8V2ZcTiXQ_image_68a98a81-c3c8-4c72-8acc-4f14c765c788.jpg",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "<image>\n<pathology>Hematopathology</pathology>\n<magnification>2.0</magnification>"
+      },
+      {
+        "from": "gpt",
+        "value": "vacuole inside of a tumor cell\nsubcapsular sinus"
+      }
+    ]
+  },
+  {
+    "id": "LV7SFxapsRE_image_f6664751-5a0e-4fed-81b4-da1f78e5e3e1",
+    "image": "LV7SFxapsRE_image_f6664751-5a0e-4fed-81b4-da1f78e5e3e1.jpg",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "<image>\n<pathology>Pulmonary</pathology>\n<magnification>0.0</magnification>"
+      },
+      {
+        "from": "gpt",
+        "value": "bottom right-hand part of the screen\nalveolar linings\nalveolar wall\nlittle capillary\nbottom right-hand part of the screen\nalveolar linings\nalveolar wall\nlittle capillary"
+      }
+    ]
+  },
+  {
+    "id": "WOik1qFB85I_image_d210cccb-3399-4dc5-b265-7249c1ee4d7d",
+    "image": "WOik1qFB85I_image_d210cccb-3399-4dc5-b265-7249c1ee4d7d.jpg",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "<image>\n<pathology>Cytopathology</pathology>\n<magnification>2.0</magnification>"
+      },
+      {
+        "from": "gpt",
+        "value": "dark red stained capsule\nconcentric ring\nCryptococcus neoformans\nmucicarmine stain\ndark red stained capsule\nconcentric ring\nCryptococcus neoformans\nmucicarmine stain"
+      }
+    ]
+  },
+  {
+    "id": "-f62w0wsKwM_image_c53291f7-0190-4102-9777-bcdcff62254d",
+    "image": "-f62w0wsKwM_image_c53291f7-0190-4102-9777-bcdcff62254d.jpg",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "<image>\n<pathology>Pulmonary</pathology>\n<magnification>1.0</magnification>"
+      },
+      {
+        "from": "gpt",
+        "value": "Viral syncytia\nDemyelination with spheroid formations\nIntranuclear inclusions\nEosinophilic cytoplasmic inclusions\nInflammation of the meninges\nViral syncytia\nDemyelination with spheroid formations\nIntranuclear inclusions\nEosinophilic cytoplasmic inclusions\nInflammation of the meninges"
+      }
+    ]
+  },
+  {
+    "id": "4i1mnz889bo_image_f6d6b2c3-842e-432e-97a9-f2eea4dad8b4",
+    "image": "4i1mnz889bo_image_f6d6b2c3-842e-432e-97a9-f2eea4dad8b4.jpg",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "<image>\n<pathology>Pulmonary</pathology>\n<magnification>0.0</magnification>"
+      },
+      {
+        "from": "gpt",
+        "value": "Dirty necrosis\ninflammation"
+      }
+    ]
+  },
+  {
+    "id": "kpkdsProuVM_image_871c8087-dd4e-4b9c-9bc1-6fc26d94bdf9",
+    "image": "kpkdsProuVM_image_871c8087-dd4e-4b9c-9bc1-6fc26d94bdf9.jpg",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "<image>\n<pathology>Genitourinary</pathology>\n<magnification>0.0</magnification>"
+      },
+      {
+        "from": "gpt",
+        "value": "Hyperplastic epithelial glands\nColumnar cells with clear to pale cytoplasm\nNuclei with open chromatin and some stratification\nBasal cell layer\nHyperplastic epithelial glands\nColumnar cells with clear to pale cytoplasm\nNuclei with open chromatin and some stratification\nBasal cell layer"
+      }
+    ]
+  }
+]

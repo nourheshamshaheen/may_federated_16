@@ -1,0 +1,81 @@
+experiment_name: first_trial_llavamed_from_without_tags
+num_clients: 2
+num_rounds: 1
+data:
+  name: Standard LLAVA Data Format
+  full_path: ./data_jsons/
+  editable_path: train_tags_client_
+  extension: .json
+  image_folder: /scratch/nshaheen/project/may_federated/train_images/
+  image_aspect_ratio: pad
+  is_multimodal: true
+  per_client_data_path: ''
+  image_processor: ''
+  mm_use_im_start_end: ''
+model:
+  mm_projector_lr: 2.0e-05
+  name: /scratch/nshaheen/LLAMA/llava_med_in_text_60k_FINAL
+  quantization: 4
+  gradient_checkpointing: true
+  freeze_backbone: false
+  lora:
+    peft_lora_r: 128
+    peft_lora_alpha: 256
+  lora_enable: true
+  lora_dropout: 0.05
+  lora_bias: none
+  model_max_length: 512
+  vision_tower: openai/clip-vit-large-patch14-336
+  tune_mm_mlp_adapter: false
+  mm_vision_select_layer: -2
+  mm_vision_select_feature: patch
+  pretrain_mm_mlp_adapter: None
+  mm_patch_merge_type: flat
+  mm_use_im_patch_token: false
+  mm_use_im_start_end: false
+  mm_projector_type: linear
+  freeze_mm_mlp_adapter: false
+train:
+  double_quant: true
+  quant_type: nf4
+  lora_r: 64
+  lora_alpha: 16
+  name: ''
+  full_path: ''
+  num_rounds: ${num_rounds}
+  save_every_round: 5
+  learning_rate_max: 5.0e-05
+  learning_rate_min: 1.0e-06
+  seq_length: 512
+  group_by_modality_length: true
+  mpt_attn_impl: triton
+  training_arguments:
+    output_dir: output/${experiment_name}
+    report_to: tensorboard
+    num_train_epochs: 1
+    gradient_checkpointing: true
+    fp16: true
+    bf16: false
+    per_device_train_batch_size: 4
+    per_device_eval_batch_size: 4
+    gradient_accumulation_steps: 1
+    weight_decay: 0.0
+    optim: adamw_torch
+    remove_unused_columns: false
+    evaluation_strategy: 'no'
+    save_strategy: steps
+    save_steps: 5000
+    save_total_limit: 1
+    learning_rate: 0.0002
+    warmup_ratio: 0.03
+    lr_scheduler_type: cosine
+    logging_steps: 1
+    dataloader_num_workers: 4
+    lazy_preprocess: true
+strategy:
+  _target_: flwr.server.strategy.FedAvg
+  fraction_fit: 0.1
+  fraction_evaluate: 0.0
+client_resources:
+  num_cpus: 2
+  num_gpus: 1.0

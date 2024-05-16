@@ -1,0 +1,9 @@
+Error executing job with overrides: []
+Traceback (most recent call last):
+  File "/scratch/nshaheen/project/may_federated/LLaVA_flowertune/main.py", line 34, in main
+    dataset=cfg.dataset.name, partitioners={"train": cfg.num_clients}
+omegaconf.errors.ConfigAttributeError: Key 'dataset' is not in struct
+    full_key: dataset
+    object_type=dict
+
+Set the environment variable HYDRA_FULL_ERROR=1 for a complete stack trace.

@@ -1,0 +1,39 @@
+Traceback (most recent call last):
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/hydra/_internal/utils.py", line 220, in run_and_report
+    return func()
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/hydra/_internal/utils.py", line 458, in <lambda>
+    lambda: hydra.run(
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/hydra/_internal/hydra.py", line 105, in run
+    cfg = self.compose_config(
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/hydra/_internal/hydra.py", line 594, in compose_config
+    cfg = self.config_loader.load_configuration(
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/hydra/_internal/config_loader_impl.py", line 142, in load_configuration
+    return self._load_configuration_impl(
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/hydra/_internal/config_loader_impl.py", line 244, in _load_configuration_impl
+    parsed_overrides, caching_repo = self._parse_overrides_and_create_caching_repo(
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/hydra/_internal/config_loader_impl.py", line 230, in _parse_overrides_and_create_caching_repo
+    self._process_config_searchpath(config_name, parsed_overrides, caching_repo)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/hydra/_internal/config_loader_impl.py", line 159, in _process_config_searchpath
+    loaded = repo.load_config(config_path=config_name)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/hydra/_internal/config_repository.py", line 348, in load_config
+    ret = self.delegate.load_config(config_path=config_path)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/hydra/_internal/config_repository.py", line 91, in load_config
+    ret = source.load_config(config_path=config_path)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/hydra/_internal/core_plugins/file_config_source.py", line 31, in load_config
+    cfg = OmegaConf.load(f)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/omegaconf/omegaconf.py", line 192, in load
+    obj = yaml.load(file_, Loader=get_yaml_loader())
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/yaml/__init__.py", line 81, in load
+    return loader.get_single_data()
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/yaml/constructor.py", line 51, in get_single_data
+    return self.construct_document(node)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/yaml/constructor.py", line 60, in construct_document
+    for dummy in generator:
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/yaml/constructor.py", line 413, in construct_yaml_map
+    value = self.construct_mapping(node)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/omegaconf/_utils.py", line 144, in construct_mapping
+    raise yaml.constructor.ConstructorError(
+yaml.constructor.ConstructorError: while constructing a mapping
+  in "/scratch/nshaheen/project/may_federated/LLaVA_flowertune/conf/config.yaml", line 45, column 5
+found duplicate key logging_steps
+  in "/scratch/nshaheen/project/may_federated/LLaVA_flowertune/conf/config.yaml", line 72, column 5

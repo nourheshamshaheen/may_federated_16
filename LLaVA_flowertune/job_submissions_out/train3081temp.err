@@ -1,0 +1,220 @@
+Special tokens have been added in the vocabulary, make sure the associated word embeddings are fine-tuned or trained.
+[92mINFO [0m:      Starting Flower simulation, config: num_rounds=1, no round_timeout
+2024-05-06 22:01:23,718	INFO worker.py:1621 -- Started a local Ray instance.
+[92mINFO [0m:      Flower VCE: Ray initialized with resources: {'object_store_memory': 45993188966.0, 'node:10.53.222.27': 1.0, 'memory': 97317440922.0, 'GPU': 1.0, 'node:__internal_head__': 1.0, 'CPU': 40.0, 'accelerator_type:V100': 1.0}
+[92mINFO [0m:      Optimize your simulation with Flower VCE: https://flower.ai/docs/framework/how-to-run-simulations.html
+[92mINFO [0m:      Flower VCE: Resources for each Virtual Client: {'num_cpus': 2, 'num_gpus': 1.0}
+[92mINFO [0m:      Flower VCE: Creating VirtualClientEngineActorPool with 1 actors
+[92mINFO [0m:      [INIT]
+[92mINFO [0m:      Requesting initial parameters from one random client
+[2m[36m(ClientAppActor pid=757695)[0m Loading checkpoint shards:   0%|          | 0/3 [00:00<?, ?it/s]
+[2m[36m(ClientAppActor pid=757695)[0m Loading checkpoint shards:  33%|███▎      | 1/3 [00:03<00:07,  3.67s/it]
+[2m[36m(ClientAppActor pid=757695)[0m Loading checkpoint shards:  67%|██████▋   | 2/3 [00:07<00:03,  3.68s/it]
+[2m[36m(ClientAppActor pid=757695)[0m Loading checkpoint shards: 100%|██████████| 3/3 [00:10<00:00,  3.26s/it]Loading checkpoint shards: 100%|██████████| 3/3 [00:10<00:00,  3.37s/it]
+[91mERROR [0m:     Traceback (most recent call last):
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 73, in _submit_job
+    out_mssg, updated_context = self.actor_pool.get_client_result(
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 399, in get_client_result
+    return self._fetch_future_result(cid)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 280, in _fetch_future_result
+    res_cid, out_mssg, updated_context = ray.get(
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/ray/_private/auto_init_hook.py", line 24, in auto_init_wrapper
+    return fn(*args, **kwargs)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/ray/_private/client_mode_hook.py", line 103, in wrapper
+    return func(*args, **kwargs)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/ray/_private/worker.py", line 2524, in get
+    raise value.as_instanceof_cause()
+ray.exceptions.RayTaskError(ClientAppException): [36mray::ClientAppActor.run()[39m (pid=757695, ip=10.53.222.27, actor_id=0954153577176fe62faafd1d01000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7fdb148a0fd0>)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/client/client_app.py", line 98, in __call__
+    return self._call(message, context)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/client/client_app.py", line 81, in ffn
+    out_message = handle_legacy_message_from_msgtype(
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/client/message_handler/message_handler.py", line 96, in handle_legacy_message_from_msgtype
+    client = client_fn(str(message.metadata.partition_id))
+  File "/scratch/nshaheen/project/may_federated/LLaVA_flowertune/client.py", line 132, in client_fn
+    return FlowerClient(
+  File "/scratch/nshaheen/project/may_federated/LLaVA_flowertune/client.py", line 44, in __init__
+    self.model = get_model(model_cfg, data_cfg, tokenizer)
+  File "/scratch/nshaheen/project/may_federated/LLaVA_flowertune/models.py", line 151, in get_model
+    model.get_model().initialize_vision_modules(
+  File "/scratch/nshaheen/project/may_federated/LLaVA_flowertune/LLaVA/llava/model/llava_arch.py", line 50, in initialize_vision_modules
+    vision_tower = model_args.vision_tower
+AttributeError: 'dict' object has no attribute 'vision_tower'
+
+The above exception was the direct cause of the following exception:
+
+[36mray::ClientAppActor.run()[39m (pid=757695, ip=10.53.222.27, actor_id=0954153577176fe62faafd1d01000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7fdb148a0fd0>)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 64, in run
+    raise ClientAppException(str(ex)) from ex
+flwr.client.client_app.ClientAppException: 
+Exception ClientAppException occurred. Message: 'dict' object has no attribute 'vision_tower'
+
+[91mERROR [0m:     [36mray::ClientAppActor.run()[39m (pid=757695, ip=10.53.222.27, actor_id=0954153577176fe62faafd1d01000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7fdb148a0fd0>)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/client/client_app.py", line 98, in __call__
+    return self._call(message, context)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/client/client_app.py", line 81, in ffn
+    out_message = handle_legacy_message_from_msgtype(
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/client/message_handler/message_handler.py", line 96, in handle_legacy_message_from_msgtype
+    client = client_fn(str(message.metadata.partition_id))
+  File "/scratch/nshaheen/project/may_federated/LLaVA_flowertune/client.py", line 132, in client_fn
+    return FlowerClient(
+  File "/scratch/nshaheen/project/may_federated/LLaVA_flowertune/client.py", line 44, in __init__
+    self.model = get_model(model_cfg, data_cfg, tokenizer)
+  File "/scratch/nshaheen/project/may_federated/LLaVA_flowertune/models.py", line 151, in get_model
+    model.get_model().initialize_vision_modules(
+  File "/scratch/nshaheen/project/may_federated/LLaVA_flowertune/LLaVA/llava/model/llava_arch.py", line 50, in initialize_vision_modules
+    vision_tower = model_args.vision_tower
+AttributeError: 'dict' object has no attribute 'vision_tower'
+
+The above exception was the direct cause of the following exception:
+
+[36mray::ClientAppActor.run()[39m (pid=757695, ip=10.53.222.27, actor_id=0954153577176fe62faafd1d01000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7fdb148a0fd0>)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 64, in run
+    raise ClientAppException(str(ex)) from ex
+flwr.client.client_app.ClientAppException: 
+Exception ClientAppException occurred. Message: 'dict' object has no attribute 'vision_tower'
+[91mERROR [0m:     [36mray::ClientAppActor.run()[39m (pid=757695, ip=10.53.222.27, actor_id=0954153577176fe62faafd1d01000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7fdb148a0fd0>)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/client/client_app.py", line 98, in __call__
+    return self._call(message, context)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/client/client_app.py", line 81, in ffn
+    out_message = handle_legacy_message_from_msgtype(
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/client/message_handler/message_handler.py", line 96, in handle_legacy_message_from_msgtype
+    client = client_fn(str(message.metadata.partition_id))
+  File "/scratch/nshaheen/project/may_federated/LLaVA_flowertune/client.py", line 132, in client_fn
+    return FlowerClient(
+  File "/scratch/nshaheen/project/may_federated/LLaVA_flowertune/client.py", line 44, in __init__
+    self.model = get_model(model_cfg, data_cfg, tokenizer)
+  File "/scratch/nshaheen/project/may_federated/LLaVA_flowertune/models.py", line 151, in get_model
+    model.get_model().initialize_vision_modules(
+  File "/scratch/nshaheen/project/may_federated/LLaVA_flowertune/LLaVA/llava/model/llava_arch.py", line 50, in initialize_vision_modules
+    vision_tower = model_args.vision_tower
+AttributeError: 'dict' object has no attribute 'vision_tower'
+
+The above exception was the direct cause of the following exception:
+
+[36mray::ClientAppActor.run()[39m (pid=757695, ip=10.53.222.27, actor_id=0954153577176fe62faafd1d01000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7fdb148a0fd0>)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 64, in run
+    raise ClientAppException(str(ex)) from ex
+flwr.client.client_app.ClientAppException: 
+Exception ClientAppException occurred. Message: 'dict' object has no attribute 'vision_tower'
+[91mERROR [0m:     Traceback (most recent call last):
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/simulation/app.py", line 308, in start_simulation
+    hist = run_fl(
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/server/server.py", line 483, in run_fl
+    hist, elapsed_time = server.fit(
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/server/server.py", line 93, in fit
+    self.parameters = self._get_initial_parameters(server_round=0, timeout=timeout)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/server/server.py", line 282, in _get_initial_parameters
+    get_parameters_res = random_client.get_parameters(
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 148, in get_parameters
+    message_out = self._submit_job(message, timeout)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 87, in _submit_job
+    raise ex
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 73, in _submit_job
+    out_mssg, updated_context = self.actor_pool.get_client_result(
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 399, in get_client_result
+    return self._fetch_future_result(cid)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 280, in _fetch_future_result
+    res_cid, out_mssg, updated_context = ray.get(
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/ray/_private/auto_init_hook.py", line 24, in auto_init_wrapper
+    return fn(*args, **kwargs)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/ray/_private/client_mode_hook.py", line 103, in wrapper
+    return func(*args, **kwargs)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/ray/_private/worker.py", line 2524, in get
+    raise value.as_instanceof_cause()
+ray.exceptions.RayTaskError(ClientAppException): [36mray::ClientAppActor.run()[39m (pid=757695, ip=10.53.222.27, actor_id=0954153577176fe62faafd1d01000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7fdb148a0fd0>)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/client/client_app.py", line 98, in __call__
+    return self._call(message, context)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/client/client_app.py", line 81, in ffn
+    out_message = handle_legacy_message_from_msgtype(
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/client/message_handler/message_handler.py", line 96, in handle_legacy_message_from_msgtype
+    client = client_fn(str(message.metadata.partition_id))
+  File "/scratch/nshaheen/project/may_federated/LLaVA_flowertune/client.py", line 132, in client_fn
+    return FlowerClient(
+  File "/scratch/nshaheen/project/may_federated/LLaVA_flowertune/client.py", line 44, in __init__
+    self.model = get_model(model_cfg, data_cfg, tokenizer)
+  File "/scratch/nshaheen/project/may_federated/LLaVA_flowertune/models.py", line 151, in get_model
+    model.get_model().initialize_vision_modules(
+  File "/scratch/nshaheen/project/may_federated/LLaVA_flowertune/LLaVA/llava/model/llava_arch.py", line 50, in initialize_vision_modules
+    vision_tower = model_args.vision_tower
+AttributeError: 'dict' object has no attribute 'vision_tower'
+
+The above exception was the direct cause of the following exception:
+
+[36mray::ClientAppActor.run()[39m (pid=757695, ip=10.53.222.27, actor_id=0954153577176fe62faafd1d01000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7fdb148a0fd0>)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 64, in run
+    raise ClientAppException(str(ex)) from ex
+flwr.client.client_app.ClientAppException: 
+Exception ClientAppException occurred. Message: 'dict' object has no attribute 'vision_tower'
+
+[91mERROR [0m:     Your simulation crashed :(. This could be because of several reasons. The most common are: 
+	 > Sometimes, issues in the simulation code itself can cause crashes. It's always a good idea to double-check your code for any potential bugs or inconsistencies that might be contributing to the problem. For example: 
+		 - You might be using a class attribute in your clients that hasn't been defined.
+		 - There could be an incorrect method call to a 3rd party library (e.g., PyTorch).
+		 - The return types of methods in your clients/strategies might be incorrect.
+	 > Your system couldn't fit a single VirtualClient: try lowering `client_resources`.
+	 > All the actors in your pool crashed. This could be because: 
+		 - You clients hit an out-of-memory (OOM) error and actors couldn't recover from it. Try launching your simulation with more generous `client_resources` setting (i.e. it seems {'num_cpus': 2, 'num_gpus': 1.0} is not enough for your run). Use fewer concurrent actors. 
+		 - You were running a multi-node simulation and all worker nodes disconnected. The head node might still be alive but cannot accommodate any actor with resources: {'num_cpus': 2, 'num_gpus': 1.0}.
+Take a look at the Flower simulation examples for guidance <https://flower.ai/docs/framework/how-to-run-simulations.html>.
+Error executing job with overrides: []
+Traceback (most recent call last):
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/simulation/app.py", line 308, in start_simulation
+    hist = run_fl(
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/server/server.py", line 483, in run_fl
+    hist, elapsed_time = server.fit(
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/server/server.py", line 93, in fit
+    self.parameters = self._get_initial_parameters(server_round=0, timeout=timeout)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/server/server.py", line 282, in _get_initial_parameters
+    get_parameters_res = random_client.get_parameters(
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 148, in get_parameters
+    message_out = self._submit_job(message, timeout)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 87, in _submit_job
+    raise ex
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 73, in _submit_job
+    out_mssg, updated_context = self.actor_pool.get_client_result(
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 399, in get_client_result
+    return self._fetch_future_result(cid)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 280, in _fetch_future_result
+    res_cid, out_mssg, updated_context = ray.get(
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/ray/_private/auto_init_hook.py", line 24, in auto_init_wrapper
+    return fn(*args, **kwargs)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/ray/_private/client_mode_hook.py", line 103, in wrapper
+    return func(*args, **kwargs)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/ray/_private/worker.py", line 2524, in get
+    raise value.as_instanceof_cause()
+ray.exceptions.RayTaskError(ClientAppException): [36mray::ClientAppActor.run()[39m (pid=757695, ip=10.53.222.27, actor_id=0954153577176fe62faafd1d01000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7fdb148a0fd0>)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/client/client_app.py", line 98, in __call__
+    return self._call(message, context)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/client/client_app.py", line 81, in ffn
+    out_message = handle_legacy_message_from_msgtype(
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/client/message_handler/message_handler.py", line 96, in handle_legacy_message_from_msgtype
+    client = client_fn(str(message.metadata.partition_id))
+  File "/scratch/nshaheen/project/may_federated/LLaVA_flowertune/client.py", line 132, in client_fn
+    return FlowerClient(
+  File "/scratch/nshaheen/project/may_federated/LLaVA_flowertune/client.py", line 44, in __init__
+    self.model = get_model(model_cfg, data_cfg, tokenizer)
+  File "/scratch/nshaheen/project/may_federated/LLaVA_flowertune/models.py", line 151, in get_model
+    model.get_model().initialize_vision_modules(
+  File "/scratch/nshaheen/project/may_federated/LLaVA_flowertune/LLaVA/llava/model/llava_arch.py", line 50, in initialize_vision_modules
+    vision_tower = model_args.vision_tower
+AttributeError: 'dict' object has no attribute 'vision_tower'
+
+The above exception was the direct cause of the following exception:
+
+[36mray::ClientAppActor.run()[39m (pid=757695, ip=10.53.222.27, actor_id=0954153577176fe62faafd1d01000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7fdb148a0fd0>)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 64, in run
+    raise ClientAppException(str(ex)) from ex
+flwr.client.client_app.ClientAppException: 
+Exception ClientAppException occurred. Message: 'dict' object has no attribute 'vision_tower'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/scratch/nshaheen/project/may_federated/LLaVA_flowertune/main.py", line 64, in main
+    history = fl.simulation.start_simulation(
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/simulation/app.py", line 344, in start_simulation
+    raise RuntimeError("Simulation crashed.") from ex
+RuntimeError: Simulation crashed.
+
+Set the environment variable HYDRA_FULL_ERROR=1 for a complete stack trace.

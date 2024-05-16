@@ -1,0 +1,142 @@
+[
+  {
+    "id": "_SPNsagiJsg_image_126799e9-4a0b-469b-b2f9-0bcd6b7e0a49",
+    "image": "_SPNsagiJsg_image_126799e9-4a0b-469b-b2f9-0bcd6b7e0a49.jpg",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "<image>\n<pathology>Dermatopathology</pathology>\n<magnification>0.0</magnification>"
+      },
+      {
+        "from": "gpt",
+        "value": "subepidermal blister\nbelow the neck\nsubepidermal blister\nbelow the neck"
+      }
+    ]
+  },
+  {
+    "id": "HCX1VemITd8_image_c465a8ca-7822-40e7-bae0-0e3e42c77d23",
+    "image": "HCX1VemITd8_image_c465a8ca-7822-40e7-bae0-0e3e42c77d23.jpg",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "<image>\n<pathology>Dermatopathology</pathology>\n<magnification>0.0</magnification>"
+      },
+      {
+        "from": "gpt",
+        "value": "Areas with eccrine material or mucin production.\nAreas with eccrine material or mucin production.\nAreas with eccrine material or mucin production."
+      }
+    ]
+  },
+  {
+    "id": "YU6uGX9nsDg_image_cdae7fcb-06bd-4e6d-a6c6-8fa369b9892f",
+    "image": "YU6uGX9nsDg_image_cdae7fcb-06bd-4e6d-a6c6-8fa369b9892f.jpg",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "<image>\n<pathology>Dermatopathology</pathology>\n<magnification>0.0</magnification>"
+      },
+      {
+        "from": "gpt",
+        "value": "Appearance consistent with Warthin tumor\nLymphoid stroma\nMucoepidermoid tumor\nSquamous cells\nCells with intermediate features\nMucin highlighted by mucicarmine stain\nAppearance consistent with Warthin tumor\nLymphoid stroma\nMucoepidermoid tumor\nSquamous cells\nCells with intermediate features\nMucin highlighted by mucicarmine stain"
+      }
+    ]
+  },
+  {
+    "id": "raPhEEhL8Ws_image_3cbbcb4f-d7e5-4c3c-ab53-7eb4a3623d0c",
+    "image": "raPhEEhL8Ws_image_3cbbcb4f-d7e5-4c3c-ab53-7eb4a3623d0c.jpg",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "<image>\n<pathology>Dermatopathology</pathology>\n<magnification>0.0</magnification>"
+      },
+      {
+        "from": "gpt",
+        "value": "Lesion on the palm\nSubcutis or near the tendon\nDistal extremities like the wrist, hand, and foot\nCollagenous background\nVariable amounts of myxoid change\nLesion on the palm\nSubcutis or near the tendon\nDistal extremities like the wrist, hand, and foot\nCollagenous background\nVariable amounts of myxoid change"
+      }
+    ]
+  },
+  {
+    "id": "RE9cAnT81ZY_image_2e1551cd-e805-465d-a870-14d0758a07d6",
+    "image": "RE9cAnT81ZY_image_2e1551cd-e805-465d-a870-14d0758a07d6.jpg",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "<image>\n<pathology>Gastrointestinal</pathology>\n<magnification>1.0</magnification>"
+      },
+      {
+        "from": "gpt",
+        "value": "The size of the cells and the nuclear configuration is somewhat stratified and elongated."
+      }
+    ]
+  },
+  {
+    "id": "1cHZNiYFTfY_image_40f2367e-b583-4479-8cf5-24a1af6f1ed0",
+    "image": "1cHZNiYFTfY_image_40f2367e-b583-4479-8cf5-24a1af6f1ed0.jpg",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "<image>\n<pathology>Pulmonary</pathology>\n<magnification>2.0</magnification>"
+      },
+      {
+        "from": "gpt",
+        "value": "alveolar wall\nblood-air barrier\ntype 1 epithelial pneumocyte\nendothelial cell cytoplasm\nbasement membrane\nalveolar wall\nblood-air barrier\ntype 1 epithelial pneumocyte\nendothelial cell cytoplasm\nbasement membrane"
+      }
+    ]
+  },
+  {
+    "id": "fo67KS6wHjA_image_a0901eab-0ed2-46cc-b44e-b50ea0398e3d",
+    "image": "fo67KS6wHjA_image_a0901eab-0ed2-46cc-b44e-b50ea0398e3d.jpg",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "<image>\n<pathology>Dermatopathology</pathology>\n<magnification>0.0</magnification>"
+      },
+      {
+        "from": "gpt",
+        "value": "reactive epithelial hyperplasia\nlichen simplex chronicus\nperigonadularis\nreactive epithelial hyperplasia\nlichen simplex chronicus\nperigonadularis"
+      }
+    ]
+  },
+  {
+    "id": "0NLdJOzhGWg_image_0d8fc840-7b30-4e33-a53e-4b2895844d0f",
+    "image": "0NLdJOzhGWg_image_0d8fc840-7b30-4e33-a53e-4b2895844d0f.jpg",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "<image>\n<pathology>Gynecologic</pathology>\n<magnification>0.0</magnification>"
+      },
+      {
+        "from": "gpt",
+        "value": "oocyte\nantral follicles\noocyte\natretic follicle"
+      }
+    ]
+  },
+  {
+    "id": "YU6uGX9nsDg_image_4a74d699-7e93-45d1-b131-4f483ec3aa59",
+    "image": "YU6uGX9nsDg_image_4a74d699-7e93-45d1-b131-4f483ec3aa59.jpg",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "<image>\n<pathology>Dermatopathology</pathology>\n<magnification>2.0</magnification>"
+      },
+      {
+        "from": "gpt",
+        "value": "Cystic spaces with intracellular mucin\nLumen with blue mucin\nSquamous differentiation\nCystic spaces with intracellular mucin\nLumen with blue mucin\nSquamous differentiation"
+      }
+    ]
+  },
+  {
+    "id": "8Dx9QGbEGo4_image_8ab2decf-6a7b-4c27-bca6-9da7252c32f8",
+    "image": "8Dx9QGbEGo4_image_8ab2decf-6a7b-4c27-bca6-9da7252c32f8.jpg",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "<image>\n<pathology>Gynecologic</pathology>\n<magnification>2.0</magnification>"
+      },
+      {
+        "from": "gpt",
+        "value": "corona radiata\nbasement membrane\ncorona radiata\nbasement membrane"
+      }
+    ]
+  }
+]

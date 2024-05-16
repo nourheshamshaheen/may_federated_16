@@ -1,0 +1,110 @@
+# Federated Instruction Tuning on General Dataset
+---
+
+experiment_name: "first_trial_llavamed_from_without_tags"
+num_clients: 2 # total number of clients
+num_rounds: 1
+
+# dataset:
+#   name: "HuggingFaceH4/llava-instruct-mix-vsft"
+
+data:
+  name: "Standard LLAVA Data Format"
+  full_path: '/scratch/nshaheen/project/may_federated/LLaVA_flowertune/data_jsons/'
+  editable_path: 'train_tags_client_'
+  extension: '.json'
+  image_folder: '/scratch/nshaheen/project/may_federated/train_images/'
+  image_aspect_ratio: 'pad'
+  is_multimodal: True
+  per_client_data_path: "" # temp arg to be initialized inside 
+  image_processor: ""
+  mm_use_im_start_end: ""
+  
+
+
+
+model:
+  mm_projector_lr: 2e-5
+  name: "/scratch/nshaheen/LLAMA/llava_med_in_text_60k_FINAL" # path local to checkpoint to start training from 
+  quantization: 4 # 8 or 4 if you want to do quantization with BitsAndBytes
+  gradient_checkpointing: True
+  freeze_backbone: False
+  peft_lora_r: 128
+  peft_lora_alpha: 256
+  lora_enable: True
+  lora_dropout: 0.05
+  lora_bias: "none"
+  model_max_length: 512
+  vision_tower: "openai/clip-vit-large-patch14-336"
+  tune_mm_mlp_adapter: False
+  mm_vision_select_layer: -2
+  mm_vision_select_feature: "patch"
+  pretrain_mm_mlp_adapter: None
+  mm_patch_merge_type: "flat"
+  mm_use_im_patch_token: False
+  mm_use_im_start_end: False
+  mm_projector_type: 'linear'
+  freeze_mm_mlp_adapter: False
+
+train:
+  mm_projector_lr: 2e-5
+  quantization: 4
+  lazy_preprocess: True 
+  double_quant: True
+  quant_type: "nf4"
+  lora_r: 64
+  lora_alpha: 16
+  name: ""
+  full_path: ""
+  num_rounds: ${num_rounds}
+  save_every_round: 5
+  learning_rate_max: 5e-5
+  learning_rate_min: 1e-6
+  seq_length: 512
+  group_by_modality_length: True
+  mpt_attn_impl: "triton"
+  training_arguments :
+    output_dir: "output/${experiment_name}"
+    report_to: "tensorboard"
+    num_train_epochs: 1
+    gradient_checkpointing: True
+    fp16: True
+    bf16: False
+    per_device_train_batch_size: 4
+    per_device_eval_batch_size: 4
+    gradient_accumulation_steps: 1
+    weight_decay: 0.
+    optim: "adamw_torch"
+    remove_unused_columns: False
+    evaluation_strategy: "no"
+    save_strategy: "steps"
+    save_steps: 5000
+    save_total_limit: 1 
+    learning_rate: 2e-4 
+    warmup_ratio: 0.03 
+    lr_scheduler_type: "cosine"
+    logging_steps: 1 
+    dataloader_num_workers: 4 
+  
+
+  #   output_dir: null # to be set by hydra
+  #   learning_rate: null # to be set by the client
+  #   per_device_train_batch_size: 4
+  #   gradient_accumulation_steps: 4
+  #   logging_steps: 10
+  #   num_train_epochs: 3
+  #   max_steps: 10
+  #   report_to: null
+  #   save_steps: 1000
+  #   save_total_limit: 10
+  #   gradient_checkpointing: ${model.gradient_checkpointing}
+  #   lr_scheduler_type: "constant"
+
+strategy:
+  _target_: flwr.server.strategy.FedAvg
+  fraction_fit: 0.1 # sample 10% of clients (i.e. 2 per round)
+  fraction_evaluate: 0.0 # no client evaluation
+
+client_resources:
+  num_cpus: 2
+  num_gpus: 1.0

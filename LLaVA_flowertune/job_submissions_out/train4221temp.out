@@ -1,0 +1,315 @@
+This is federated training
+experiment_name: first_trial_llavamed_from_without_tags
+num_clients: 2
+num_rounds: 1
+data:
+  name: Standard LLAVA Data Format
+  full_path: /scratch/nshaheen/project/may_federated/LLaVA_flowertune/data_jsons/
+  editable_path: train_tags_client_
+  extension: .json
+  image_folder: /scratch/nshaheen/project/may_federated/train_images/
+  image_aspect_ratio: pad
+  is_multimodal: true
+  per_client_data_path: ''
+  image_processor: ''
+  mm_use_im_start_end: ''
+model:
+  mm_projector_lr: 2.0e-05
+  name: /scratch/nshaheen/LLAMA/llava_med_in_text_60k_FINAL
+  quantization: 4
+  gradient_checkpointing: true
+  freeze_backbone: false
+  peft_lora_r: 128
+  peft_lora_alpha: 256
+  lora_enable: true
+  lora_dropout: 0.05
+  lora_bias: none
+  model_max_length: 512
+  vision_tower: openai/clip-vit-large-patch14-336
+  tune_mm_mlp_adapter: false
+  mm_vision_select_layer: -2
+  mm_vision_select_feature: patch
+  pretrain_mm_mlp_adapter: None
+  mm_patch_merge_type: flat
+  mm_use_im_patch_token: false
+  mm_use_im_start_end: false
+  mm_projector_type: linear
+  freeze_mm_mlp_adapter: false
+train:
+  mm_projector_lr: 2.0e-05
+  quantization: 4
+  lazy_preprocess: true
+  double_quant: true
+  quant_type: nf4
+  lora_r: 64
+  lora_alpha: 16
+  name: ''
+  full_path: ''
+  num_rounds: ${num_rounds}
+  save_every_round: 5
+  learning_rate_max: 5.0e-05
+  learning_rate_min: 1.0e-06
+  seq_length: 512
+  group_by_modality_length: true
+  mpt_attn_impl: triton
+  training_arguments:
+    output_dir: output/${experiment_name}
+    report_to: tensorboard
+    num_train_epochs: 1
+    gradient_checkpointing: true
+    fp16: true
+    bf16: false
+    per_device_train_batch_size: 4
+    per_device_eval_batch_size: 4
+    gradient_accumulation_steps: 1
+    weight_decay: 0.0
+    optim: adamw_torch
+    remove_unused_columns: false
+    evaluation_strategy: 'no'
+    save_strategy: steps
+    save_steps: 5000
+    save_total_limit: 1
+    learning_rate: 0.0002
+    warmup_ratio: 0.03
+    lr_scheduler_type: cosine
+    logging_steps: 1
+    dataloader_num_workers: 4
+strategy:
+  _target_: flwr.server.strategy.FedAvg
+  fraction_fit: 0.1
+  fraction_evaluate: 0.0
+client_resources:
+  num_cpus: 2
+  num_gpus: 1.0
+
+NUM CPUS: 2
+[2024-05-12 00:08:11,121][flwr][INFO] - Starting Flower simulation, config: num_rounds=1, no round_timeout
+[2024-05-12 00:08:37,426][flwr][INFO] - Flower VCE: Ray initialized with resources: {'object_store_memory': 90263026483.0, 'CPU': 40.0, 'memory': 200613728461.0, 'node:10.53.222.24': 1.0, 'node:__internal_head__': 1.0, 'GPU': 1.0, 'accelerator_type:V100': 1.0}
+[2024-05-12 00:08:37,429][flwr][INFO] - Optimize your simulation with Flower VCE: https://flower.ai/docs/framework/how-to-run-simulations.html
+[2024-05-12 00:08:37,430][flwr][INFO] - Flower VCE: Resources for each Virtual Client: {'num_cpus': 2, 'num_gpus': 1.0}
+[2024-05-12 00:08:37,450][flwr][INFO] - Flower VCE: Creating VirtualClientEngineActorPool with 1 actors
+[2024-05-12 00:08:37,457][flwr][INFO] - [INIT]
+[2024-05-12 00:08:37,459][flwr][INFO] - Requesting initial parameters from one random client
+[2024-05-12 00:10:00,399][flwr][INFO] - Received initial parameters from one random client
+[2024-05-12 00:10:00,401][flwr][INFO] - Evaluating initial global parameters
+[2024-05-12 00:10:00,796][flwr][INFO] - initial parameters (loss, other metrics): 0.0, {}
+[2024-05-12 00:10:00,798][flwr][INFO] - 
+[2024-05-12 00:10:00,800][flwr][INFO] - [ROUND 1]
+[2024-05-12 00:10:00,802][flwr][INFO] - configure_fit: strategy sampled 2 clients (out of 2)
+[2024-05-12 00:10:44,494][flwr][ERROR] - Traceback (most recent call last):
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 73, in _submit_job
+    out_mssg, updated_context = self.actor_pool.get_client_result(
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 399, in get_client_result
+    return self._fetch_future_result(cid)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 280, in _fetch_future_result
+    res_cid, out_mssg, updated_context = ray.get(
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/ray/_private/auto_init_hook.py", line 24, in auto_init_wrapper
+    return fn(*args, **kwargs)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/ray/_private/client_mode_hook.py", line 103, in wrapper
+    return func(*args, **kwargs)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/ray/_private/worker.py", line 2524, in get
+    raise value.as_instanceof_cause()
+ray.exceptions.RayTaskError(ClientAppException): [36mray::ClientAppActor.run()[39m (pid=1840109, ip=10.53.222.24, actor_id=ca73b493e711ea86b082d01901000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7f1d540726d0>)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/client/client_app.py", line 98, in __call__
+    return self._call(message, context)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/client/client_app.py", line 81, in ffn
+    out_message = handle_legacy_message_from_msgtype(
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/client/message_handler/message_handler.py", line 130, in handle_legacy_message_from_msgtype
+    fit_res = maybe_call_fit(
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/client/client.py", line 234, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/client/numpy_client.py", line 238, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/scratch/nshaheen/project/may_federated/LLaVA_flowertune/client.py", line 86, in fit
+    results = trainer.train()
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/transformers/trainer.py", line 1859, in train
+    return inner_training_loop(
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/transformers/trainer.py", line 2012, in _inner_training_loop
+    model, self.optimizer = self.accelerator.prepare(self.model, self.optimizer)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/accelerate/accelerator.py", line 1228, in prepare
+    result = tuple(
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/accelerate/accelerator.py", line 1229, in <genexpr>
+    self._prepare_one(obj, first_pass=True, device_placement=d) for obj, d in zip(args, device_placement)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/accelerate/accelerator.py", line 1105, in _prepare_one
+    return self.prepare_model(obj, device_placement=device_placement)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/accelerate/accelerator.py", line 1328, in prepare_model
+    if torch.device(current_device_index) != self.device:
+TypeError: device() received an invalid combination of arguments - got (NoneType), but expected one of:
+ * (torch.device device)
+      didn't match because some of the arguments have invalid types: (!NoneType!)
+ * (str type, int index)
+
+
+The above exception was the direct cause of the following exception:
+
+[36mray::ClientAppActor.run()[39m (pid=1840109, ip=10.53.222.24, actor_id=ca73b493e711ea86b082d01901000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7f1d540726d0>)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 64, in run
+    raise ClientAppException(str(ex)) from ex
+flwr.client.client_app.ClientAppException: 
+Exception ClientAppException occurred. Message: device() received an invalid combination of arguments - got (NoneType), but expected one of:
+ * (torch.device device)
+      didn't match because some of the arguments have invalid types: (!NoneType!)
+ * (str type, int index)
+
+[2024-05-12 00:10:44,514][flwr][ERROR] - [36mray::ClientAppActor.run()[39m (pid=1840109, ip=10.53.222.24, actor_id=ca73b493e711ea86b082d01901000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7f1d540726d0>)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/client/client_app.py", line 98, in __call__
+    return self._call(message, context)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/client/client_app.py", line 81, in ffn
+    out_message = handle_legacy_message_from_msgtype(
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/client/message_handler/message_handler.py", line 130, in handle_legacy_message_from_msgtype
+    fit_res = maybe_call_fit(
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/client/client.py", line 234, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/client/numpy_client.py", line 238, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/scratch/nshaheen/project/may_federated/LLaVA_flowertune/client.py", line 86, in fit
+    results = trainer.train()
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/transformers/trainer.py", line 1859, in train
+    return inner_training_loop(
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/transformers/trainer.py", line 2012, in _inner_training_loop
+    model, self.optimizer = self.accelerator.prepare(self.model, self.optimizer)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/accelerate/accelerator.py", line 1228, in prepare
+    result = tuple(
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/accelerate/accelerator.py", line 1229, in <genexpr>
+    self._prepare_one(obj, first_pass=True, device_placement=d) for obj, d in zip(args, device_placement)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/accelerate/accelerator.py", line 1105, in _prepare_one
+    return self.prepare_model(obj, device_placement=device_placement)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/accelerate/accelerator.py", line 1328, in prepare_model
+    if torch.device(current_device_index) != self.device:
+TypeError: device() received an invalid combination of arguments - got (NoneType), but expected one of:
+ * (torch.device device)
+      didn't match because some of the arguments have invalid types: (!NoneType!)
+ * (str type, int index)
+
+
+The above exception was the direct cause of the following exception:
+
+[36mray::ClientAppActor.run()[39m (pid=1840109, ip=10.53.222.24, actor_id=ca73b493e711ea86b082d01901000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7f1d540726d0>)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 64, in run
+    raise ClientAppException(str(ex)) from ex
+flwr.client.client_app.ClientAppException: 
+Exception ClientAppException occurred. Message: device() received an invalid combination of arguments - got (NoneType), but expected one of:
+ * (torch.device device)
+      didn't match because some of the arguments have invalid types: (!NoneType!)
+ * (str type, int index)
+[2024-05-12 00:11:31,596][flwr][ERROR] - Traceback (most recent call last):
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 73, in _submit_job
+    out_mssg, updated_context = self.actor_pool.get_client_result(
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 399, in get_client_result
+    return self._fetch_future_result(cid)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 280, in _fetch_future_result
+    res_cid, out_mssg, updated_context = ray.get(
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/ray/_private/auto_init_hook.py", line 24, in auto_init_wrapper
+    return fn(*args, **kwargs)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/ray/_private/client_mode_hook.py", line 103, in wrapper
+    return func(*args, **kwargs)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/ray/_private/worker.py", line 2524, in get
+    raise value.as_instanceof_cause()
+ray.exceptions.RayTaskError(ClientAppException): [36mray::ClientAppActor.run()[39m (pid=1840109, ip=10.53.222.24, actor_id=ca73b493e711ea86b082d01901000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7f1d540726d0>)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/client/client_app.py", line 98, in __call__
+    return self._call(message, context)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/client/client_app.py", line 81, in ffn
+    out_message = handle_legacy_message_from_msgtype(
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/client/message_handler/message_handler.py", line 130, in handle_legacy_message_from_msgtype
+    fit_res = maybe_call_fit(
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/client/client.py", line 234, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/client/numpy_client.py", line 238, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/scratch/nshaheen/project/may_federated/LLaVA_flowertune/client.py", line 86, in fit
+    results = trainer.train()
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/transformers/trainer.py", line 1859, in train
+    return inner_training_loop(
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/transformers/trainer.py", line 2012, in _inner_training_loop
+    model, self.optimizer = self.accelerator.prepare(self.model, self.optimizer)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/accelerate/accelerator.py", line 1228, in prepare
+    result = tuple(
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/accelerate/accelerator.py", line 1229, in <genexpr>
+    self._prepare_one(obj, first_pass=True, device_placement=d) for obj, d in zip(args, device_placement)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/accelerate/accelerator.py", line 1105, in _prepare_one
+    return self.prepare_model(obj, device_placement=device_placement)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/accelerate/accelerator.py", line 1328, in prepare_model
+    if torch.device(current_device_index) != self.device:
+TypeError: device() received an invalid combination of arguments - got (NoneType), but expected one of:
+ * (torch.device device)
+      didn't match because some of the arguments have invalid types: (!NoneType!)
+ * (str type, int index)
+
+
+The above exception was the direct cause of the following exception:
+
+[36mray::ClientAppActor.run()[39m (pid=1840109, ip=10.53.222.24, actor_id=ca73b493e711ea86b082d01901000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7f1d540726d0>)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 64, in run
+    raise ClientAppException(str(ex)) from ex
+flwr.client.client_app.ClientAppException: 
+Exception ClientAppException occurred. Message: device() received an invalid combination of arguments - got (NoneType), but expected one of:
+ * (torch.device device)
+      didn't match because some of the arguments have invalid types: (!NoneType!)
+ * (str type, int index)
+
+[2024-05-12 00:11:31,598][flwr][ERROR] - [36mray::ClientAppActor.run()[39m (pid=1840109, ip=10.53.222.24, actor_id=ca73b493e711ea86b082d01901000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7f1d540726d0>)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/client/client_app.py", line 98, in __call__
+    return self._call(message, context)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/client/client_app.py", line 81, in ffn
+    out_message = handle_legacy_message_from_msgtype(
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/client/message_handler/message_handler.py", line 130, in handle_legacy_message_from_msgtype
+    fit_res = maybe_call_fit(
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/client/client.py", line 234, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/client/numpy_client.py", line 238, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/scratch/nshaheen/project/may_federated/LLaVA_flowertune/client.py", line 86, in fit
+    results = trainer.train()
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/transformers/trainer.py", line 1859, in train
+    return inner_training_loop(
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/transformers/trainer.py", line 2012, in _inner_training_loop
+    model, self.optimizer = self.accelerator.prepare(self.model, self.optimizer)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/accelerate/accelerator.py", line 1228, in prepare
+    result = tuple(
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/accelerate/accelerator.py", line 1229, in <genexpr>
+    self._prepare_one(obj, first_pass=True, device_placement=d) for obj, d in zip(args, device_placement)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/accelerate/accelerator.py", line 1105, in _prepare_one
+    return self.prepare_model(obj, device_placement=device_placement)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/accelerate/accelerator.py", line 1328, in prepare_model
+    if torch.device(current_device_index) != self.device:
+TypeError: device() received an invalid combination of arguments - got (NoneType), but expected one of:
+ * (torch.device device)
+      didn't match because some of the arguments have invalid types: (!NoneType!)
+ * (str type, int index)
+
+
+The above exception was the direct cause of the following exception:
+
+[36mray::ClientAppActor.run()[39m (pid=1840109, ip=10.53.222.24, actor_id=ca73b493e711ea86b082d01901000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7f1d540726d0>)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 64, in run
+    raise ClientAppException(str(ex)) from ex
+flwr.client.client_app.ClientAppException: 
+Exception ClientAppException occurred. Message: device() received an invalid combination of arguments - got (NoneType), but expected one of:
+ * (torch.device device)
+      didn't match because some of the arguments have invalid types: (!NoneType!)
+ * (str type, int index)
+[2024-05-12 00:11:31,601][flwr][INFO] - aggregate_fit: received 0 results and 2 failures
+[2024-05-12 00:11:32,063][flwr][ERROR] - get_model() missing 2 required positional arguments: 'data_cfg' and 'tokenizer'
+[2024-05-12 00:11:32,074][flwr][ERROR] - Traceback (most recent call last):
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/simulation/app.py", line 323, in start_simulation
+    hist = run_fl(
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/server/server.py", line 483, in run_fl
+    hist, elapsed_time = server.fit(
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/server/server.py", line 126, in fit
+    res_cen = self.strategy.evaluate(current_round, parameters=self.parameters)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/server/strategy/fedavg.py", line 167, in evaluate
+    eval_res = self.evaluate_fn(server_round, parameters_ndarrays, {})
+  File "/scratch/nshaheen/project/may_federated/LLaVA_flowertune/utils.py", line 16, in evaluate
+    model = get_model(model_cfg)
+TypeError: get_model() missing 2 required positional arguments: 'data_cfg' and 'tokenizer'
+
+[2024-05-12 00:11:32,076][flwr][ERROR] - Your simulation crashed :(. This could be because of several reasons. The most common are: 
+	 > Sometimes, issues in the simulation code itself can cause crashes. It's always a good idea to double-check your code for any potential bugs or inconsistencies that might be contributing to the problem. For example: 
+		 - You might be using a class attribute in your clients that hasn't been defined.
+		 - There could be an incorrect method call to a 3rd party library (e.g., PyTorch).
+		 - The return types of methods in your clients/strategies might be incorrect.
+	 > Your system couldn't fit a single VirtualClient: try lowering `client_resources`.
+	 > All the actors in your pool crashed. This could be because: 
+		 - You clients hit an out-of-memory (OOM) error and actors couldn't recover from it. Try launching your simulation with more generous `client_resources` setting (i.e. it seems {'num_cpus': 2, 'num_gpus': 1.0} is not enough for your run). Use fewer concurrent actors. 
+		 - You were running a multi-node simulation and all worker nodes disconnected. The head node might still be alive but cannot accommodate any actor with resources: {'num_cpus': 2, 'num_gpus': 1.0}.
+Take a look at the Flower simulation examples for guidance <https://flower.ai/docs/framework/how-to-run-simulations.html>.

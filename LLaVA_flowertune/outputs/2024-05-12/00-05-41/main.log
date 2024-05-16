@@ -1,0 +1,194 @@
+[2024-05-12 00:05:41,799][flwr][INFO] - Starting Flower simulation, config: num_rounds=1, no round_timeout
+[2024-05-12 00:06:08,260][flwr][INFO] - Flower VCE: Ray initialized with resources: {'object_store_memory': 92453938790.0, 'CPU': 40.0, 'node:__internal_head__': 1.0, 'GPU': 1.0, 'memory': 205725857178.0, 'node:10.53.222.24': 1.0, 'accelerator_type:V100': 1.0}
+[2024-05-12 00:06:08,263][flwr][INFO] - Optimize your simulation with Flower VCE: https://flower.ai/docs/framework/how-to-run-simulations.html
+[2024-05-12 00:06:08,267][flwr][INFO] - Flower VCE: Resources for each Virtual Client: {'num_cpus': 2, 'num_gpus': 1.0}
+[2024-05-12 00:06:08,292][flwr][INFO] - Flower VCE: Creating VirtualClientEngineActorPool with 1 actors
+[2024-05-12 00:06:08,299][flwr][INFO] - [INIT]
+[2024-05-12 00:06:08,303][flwr][INFO] - Requesting initial parameters from one random client
+[2024-05-12 00:07:01,931][flwr][INFO] - Received initial parameters from one random client
+[2024-05-12 00:07:01,934][flwr][INFO] - Evaluating initial global parameters
+[2024-05-12 00:07:02,334][flwr][INFO] - initial parameters (loss, other metrics): 0.0, {}
+[2024-05-12 00:07:02,336][flwr][INFO] - 
+[2024-05-12 00:07:02,337][flwr][INFO] - [ROUND 1]
+[2024-05-12 00:07:02,340][flwr][INFO] - configure_fit: strategy sampled 2 clients (out of 2)
+[2024-05-12 00:07:53,502][flwr][ERROR] - Traceback (most recent call last):
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 73, in _submit_job
+    out_mssg, updated_context = self.actor_pool.get_client_result(
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 399, in get_client_result
+    return self._fetch_future_result(cid)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 280, in _fetch_future_result
+    res_cid, out_mssg, updated_context = ray.get(
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/ray/_private/auto_init_hook.py", line 24, in auto_init_wrapper
+    return fn(*args, **kwargs)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/ray/_private/client_mode_hook.py", line 103, in wrapper
+    return func(*args, **kwargs)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/ray/_private/worker.py", line 2524, in get
+    raise value.as_instanceof_cause()
+ray.exceptions.RayTaskError(ClientAppException): [36mray::ClientAppActor.run()[39m (pid=1839018, ip=10.53.222.24, actor_id=09020ddc832a49e9ac493f2d01000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7fc6b9f806d0>)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/client/client_app.py", line 98, in __call__
+    return self._call(message, context)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/client/client_app.py", line 81, in ffn
+    out_message = handle_legacy_message_from_msgtype(
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/client/message_handler/message_handler.py", line 130, in handle_legacy_message_from_msgtype
+    fit_res = maybe_call_fit(
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/client/client.py", line 234, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/client/numpy_client.py", line 238, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/scratch/nshaheen/project/may_federated/LLaVA_flowertune/client.py", line 84, in fit
+    results = trainer.train(resume_from_checkpoint=True)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/transformers/trainer.py", line 1859, in train
+    return inner_training_loop(
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/transformers/trainer.py", line 1888, in _inner_training_loop
+    train_dataloader = self.get_train_dataloader()
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/transformers/trainer.py", line 874, in get_train_dataloader
+    dataloader_params["sampler"] = self._get_train_sampler()
+  File "/scratch/nshaheen/project/may_federated/LLaVA_flowertune/LLaVA/llava/train/llava_trainer.py", line 146, in _get_train_sampler
+    self.get_config_args()
+  File "/scratch/nshaheen/project/may_federated/LLaVA_flowertune/LLaVA/llava/train/llava_trainer.py", line 142, in get_config_args
+    # self.args.device = device
+AttributeError: can't set attribute
+
+The above exception was the direct cause of the following exception:
+
+[36mray::ClientAppActor.run()[39m (pid=1839018, ip=10.53.222.24, actor_id=09020ddc832a49e9ac493f2d01000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7fc6b9f806d0>)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 64, in run
+    raise ClientAppException(str(ex)) from ex
+flwr.client.client_app.ClientAppException: 
+Exception ClientAppException occurred. Message: can't set attribute
+
+[2024-05-12 00:07:53,504][flwr][ERROR] - [36mray::ClientAppActor.run()[39m (pid=1839018, ip=10.53.222.24, actor_id=09020ddc832a49e9ac493f2d01000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7fc6b9f806d0>)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/client/client_app.py", line 98, in __call__
+    return self._call(message, context)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/client/client_app.py", line 81, in ffn
+    out_message = handle_legacy_message_from_msgtype(
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/client/message_handler/message_handler.py", line 130, in handle_legacy_message_from_msgtype
+    fit_res = maybe_call_fit(
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/client/client.py", line 234, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/client/numpy_client.py", line 238, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/scratch/nshaheen/project/may_federated/LLaVA_flowertune/client.py", line 84, in fit
+    results = trainer.train(resume_from_checkpoint=True)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/transformers/trainer.py", line 1859, in train
+    return inner_training_loop(
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/transformers/trainer.py", line 1888, in _inner_training_loop
+    train_dataloader = self.get_train_dataloader()
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/transformers/trainer.py", line 874, in get_train_dataloader
+    dataloader_params["sampler"] = self._get_train_sampler()
+  File "/scratch/nshaheen/project/may_federated/LLaVA_flowertune/LLaVA/llava/train/llava_trainer.py", line 146, in _get_train_sampler
+    self.get_config_args()
+  File "/scratch/nshaheen/project/may_federated/LLaVA_flowertune/LLaVA/llava/train/llava_trainer.py", line 142, in get_config_args
+    # self.args.device = device
+AttributeError: can't set attribute
+
+The above exception was the direct cause of the following exception:
+
+[36mray::ClientAppActor.run()[39m (pid=1839018, ip=10.53.222.24, actor_id=09020ddc832a49e9ac493f2d01000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7fc6b9f806d0>)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 64, in run
+    raise ClientAppException(str(ex)) from ex
+flwr.client.client_app.ClientAppException: 
+Exception ClientAppException occurred. Message: can't set attribute
+[2024-05-12 00:08:43,313][flwr][ERROR] - Traceback (most recent call last):
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 73, in _submit_job
+    out_mssg, updated_context = self.actor_pool.get_client_result(
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 399, in get_client_result
+    return self._fetch_future_result(cid)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 280, in _fetch_future_result
+    res_cid, out_mssg, updated_context = ray.get(
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/ray/_private/auto_init_hook.py", line 24, in auto_init_wrapper
+    return fn(*args, **kwargs)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/ray/_private/client_mode_hook.py", line 103, in wrapper
+    return func(*args, **kwargs)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/ray/_private/worker.py", line 2524, in get
+    raise value.as_instanceof_cause()
+ray.exceptions.RayTaskError(ClientAppException): [36mray::ClientAppActor.run()[39m (pid=1839018, ip=10.53.222.24, actor_id=09020ddc832a49e9ac493f2d01000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7fc6b9f806d0>)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/client/client_app.py", line 98, in __call__
+    return self._call(message, context)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/client/client_app.py", line 81, in ffn
+    out_message = handle_legacy_message_from_msgtype(
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/client/message_handler/message_handler.py", line 130, in handle_legacy_message_from_msgtype
+    fit_res = maybe_call_fit(
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/client/client.py", line 234, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/client/numpy_client.py", line 238, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/scratch/nshaheen/project/may_federated/LLaVA_flowertune/client.py", line 84, in fit
+    results = trainer.train(resume_from_checkpoint=True)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/transformers/trainer.py", line 1859, in train
+    return inner_training_loop(
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/transformers/trainer.py", line 1888, in _inner_training_loop
+    train_dataloader = self.get_train_dataloader()
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/transformers/trainer.py", line 874, in get_train_dataloader
+    dataloader_params["sampler"] = self._get_train_sampler()
+  File "/scratch/nshaheen/project/may_federated/LLaVA_flowertune/LLaVA/llava/train/llava_trainer.py", line 146, in _get_train_sampler
+    self.get_config_args()
+  File "/scratch/nshaheen/project/may_federated/LLaVA_flowertune/LLaVA/llava/train/llava_trainer.py", line 142, in get_config_args
+    # self.args.device = device
+AttributeError: can't set attribute
+
+The above exception was the direct cause of the following exception:
+
+[36mray::ClientAppActor.run()[39m (pid=1839018, ip=10.53.222.24, actor_id=09020ddc832a49e9ac493f2d01000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7fc6b9f806d0>)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 64, in run
+    raise ClientAppException(str(ex)) from ex
+flwr.client.client_app.ClientAppException: 
+Exception ClientAppException occurred. Message: can't set attribute
+
+[2024-05-12 00:08:43,315][flwr][ERROR] - [36mray::ClientAppActor.run()[39m (pid=1839018, ip=10.53.222.24, actor_id=09020ddc832a49e9ac493f2d01000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7fc6b9f806d0>)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/client/client_app.py", line 98, in __call__
+    return self._call(message, context)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/client/client_app.py", line 81, in ffn
+    out_message = handle_legacy_message_from_msgtype(
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/client/message_handler/message_handler.py", line 130, in handle_legacy_message_from_msgtype
+    fit_res = maybe_call_fit(
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/client/client.py", line 234, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/client/numpy_client.py", line 238, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/scratch/nshaheen/project/may_federated/LLaVA_flowertune/client.py", line 84, in fit
+    results = trainer.train(resume_from_checkpoint=True)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/transformers/trainer.py", line 1859, in train
+    return inner_training_loop(
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/transformers/trainer.py", line 1888, in _inner_training_loop
+    train_dataloader = self.get_train_dataloader()
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/transformers/trainer.py", line 874, in get_train_dataloader
+    dataloader_params["sampler"] = self._get_train_sampler()
+  File "/scratch/nshaheen/project/may_federated/LLaVA_flowertune/LLaVA/llava/train/llava_trainer.py", line 146, in _get_train_sampler
+    self.get_config_args()
+  File "/scratch/nshaheen/project/may_federated/LLaVA_flowertune/LLaVA/llava/train/llava_trainer.py", line 142, in get_config_args
+    # self.args.device = device
+AttributeError: can't set attribute
+
+The above exception was the direct cause of the following exception:
+
+[36mray::ClientAppActor.run()[39m (pid=1839018, ip=10.53.222.24, actor_id=09020ddc832a49e9ac493f2d01000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7fc6b9f806d0>)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 64, in run
+    raise ClientAppException(str(ex)) from ex
+flwr.client.client_app.ClientAppException: 
+Exception ClientAppException occurred. Message: can't set attribute
+[2024-05-12 00:08:43,317][flwr][INFO] - aggregate_fit: received 0 results and 2 failures
+[2024-05-12 00:08:43,735][flwr][ERROR] - get_model() missing 2 required positional arguments: 'data_cfg' and 'tokenizer'
+[2024-05-12 00:08:43,744][flwr][ERROR] - Traceback (most recent call last):
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/simulation/app.py", line 323, in start_simulation
+    hist = run_fl(
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/server/server.py", line 483, in run_fl
+    hist, elapsed_time = server.fit(
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/server/server.py", line 126, in fit
+    res_cen = self.strategy.evaluate(current_round, parameters=self.parameters)
+  File "/home/nshaheen/anaconda3/envs/grad_proj/lib/python3.9/site-packages/flwr/server/strategy/fedavg.py", line 167, in evaluate
+    eval_res = self.evaluate_fn(server_round, parameters_ndarrays, {})
+  File "/scratch/nshaheen/project/may_federated/LLaVA_flowertune/utils.py", line 16, in evaluate
+    model = get_model(model_cfg)
+TypeError: get_model() missing 2 required positional arguments: 'data_cfg' and 'tokenizer'
+
+[2024-05-12 00:08:43,746][flwr][ERROR] - Your simulation crashed :(. This could be because of several reasons. The most common are: 
+	 > Sometimes, issues in the simulation code itself can cause crashes. It's always a good idea to double-check your code for any potential bugs or inconsistencies that might be contributing to the problem. For example: 
+		 - You might be using a class attribute in your clients that hasn't been defined.
+		 - There could be an incorrect method call to a 3rd party library (e.g., PyTorch).
+		 - The return types of methods in your clients/strategies might be incorrect.
+	 > Your system couldn't fit a single VirtualClient: try lowering `client_resources`.
+	 > All the actors in your pool crashed. This could be because: 
+		 - You clients hit an out-of-memory (OOM) error and actors couldn't recover from it. Try launching your simulation with more generous `client_resources` setting (i.e. it seems {'num_cpus': 2, 'num_gpus': 1.0} is not enough for your run). Use fewer concurrent actors. 
+		 - You were running a multi-node simulation and all worker nodes disconnected. The head node might still be alive but cannot accommodate any actor with resources: {'num_cpus': 2, 'num_gpus': 1.0}.
+Take a look at the Flower simulation examples for guidance <https://flower.ai/docs/framework/how-to-run-simulations.html>.
